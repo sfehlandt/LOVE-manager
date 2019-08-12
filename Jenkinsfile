@@ -3,19 +3,19 @@ pipeline {
   environment {
     registryCredential = "dockerhub-inriachile"
     script {
-      def gitTag = sh(returnStdout: true, script: "git tag --points-at")
-      echo "gitTag: ${gitTag}"
-      def gitBranch = ${GIT_BRANCH}
-      echo "gitBranch: ${gitBranch}"
+      def git_tag = sh(returnStdout: true, script: "git tag --points-at")
+      echo "git_tag: ${git_tag}"
+      def git_branch = ${GIT_BRANCH}
+      echo "git_branch: ${git_branch}"
       echo "GIT_BRANCH: ${GIT_BRANCH}"
-      if (gitBranch == "master" && gitTag != "" && gitTag != null) {
-        def imageTag = gitTag
+      if (git_branch == "master" && git_tag != "" && git_tag != null) {
+        def image_tag = git_tag
       } else {
-        def imageTag = gitBranch
+        def image_tag = git_branch
       }
-      echo "imageTag: ${imageTag}"
+      echo "image_tag: ${image_tag}"
     }
-    dockerImageName = "inriachile/love-manager:${GIT_BRANCH}"
+    dockerImageName = "inriachile/love-manager:${image_tag}"
     dockerImage = ""
   }
 
