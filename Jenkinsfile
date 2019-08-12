@@ -16,18 +16,18 @@ pipeline {
       }
       steps {
         script {
+          echo "GIT_BRANCH: ${GIT_BRANCH}"
           def git_tag = sh(returnStdout: true, script: "git tag --points-at")
           echo "git_tag: ${git_tag}"
-          def git_branch = ${GIT_BRANCH}
+          def git_branch = "${GIT_BRANCH}"
           echo "git_branch: ${git_branch}"
-          echo "GIT_BRANCH: ${GIT_BRANCH}"
           if (git_branch == "master" && git_tag != "" && git_tag != null) {
             def image_tag = git_tag
           } else {
             def image_tag = git_branch
           }
           echo "image_tag: ${image_tag}"
-          dockerImageName = dockerBaseImageName + "${image_tag}"
+          def dockerImageName = dockerBaseImageName + "${image_tag}"
         }
         script {
           dockerImage = docker.build dockerImageName
