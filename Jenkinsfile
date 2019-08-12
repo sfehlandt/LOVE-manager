@@ -26,8 +26,8 @@ pipeline {
             image_tag = git_tag
           }
           echo "image_tag: ${image_tag}"
-          echo "dockerImageName: ${image_tag}"
           def dockerImageName = dockerBaseImageName + image_tag
+          echo "dockerImageName: ${dockerImageName}"
           dockerImage = docker.build dockerImageName
         }
         // script {
