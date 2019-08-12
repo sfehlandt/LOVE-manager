@@ -3,15 +3,15 @@ pipeline {
   environment {
     registryCredential = "dockerhub-inriachile"
     script {
-      def git_tag = sh(returnStdout: true, script: "git tag --points-at")
+      git_tag = sh(returnStdout: true, script: "git tag --points-at")
       echo "git_tag: ${git_tag}"
-      def git_branch = ${GIT_BRANCH}
+      git_branch = ${GIT_BRANCH}
       echo "git_branch: ${git_branch}"
       echo "GIT_BRANCH: ${GIT_BRANCH}"
       if (git_branch == "master" && git_tag != "" && git_tag != null) {
-        def image_tag = git_tag
+        image_tag = git_tag
       } else {
-        def image_tag = git_branch
+        image_tag = git_branch
       }
       echo "image_tag: ${image_tag}"
     }
