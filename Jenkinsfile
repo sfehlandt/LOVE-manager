@@ -21,10 +21,9 @@ pipeline {
           echo "git_tag: ${git_tag}"
           def git_branch = "${GIT_BRANCH}"
           echo "git_branch: ${git_branch}"
+          def image_tag = git_branch
           if (git_branch == "master" && git_tag != "" && git_tag != null) {
-            def image_tag = git_tag
-          } else {
-            def image_tag = git_branch
+            image_tag = git_tag
           }
           echo "image_tag: ${image_tag}"
           def dockerImageName = dockerBaseImageName + "${image_tag}"
