@@ -23,6 +23,7 @@ pipeline {
           def image_tag = git_branch
 
           def slashPosition = git_branch.indexOf('/')
+          echo "slashPosition: ${slashPosition}"
           if (slashPosition > 0) {
             git_branch = git_branch.substring(0, slashPosition)
             git_tag = git_branch.substring(slashPosition + 1, git_branch.length())
