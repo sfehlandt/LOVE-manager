@@ -17,14 +17,18 @@ pipeline {
       steps {
         script {
           echo "GIT_BRANCH: ${GIT_BRANCH}"
-          def git_tag = sh(returnStdout: true, script: "git tag --points-at").trim()
-          echo "git_tag: ${git_tag}"
           def git_branch = "${GIT_BRANCH}"
           echo "git_branch: ${git_branch}"
           def image_tag = git_branch
-          if (git_branch == "master" && git_tag != "" && git_tag != null) {
+
+          def slashPosition = git_branch.indexOf('/')
+          if (slashPosition > 0) {
+            git_branch = git_branch.substring(0, slashPosition)
+            git_tag = git_branch.substring(slashPosition + 1, git_branch.length())
             image_tag = git_tag
+            echo "git_tag: ${git_tag}"
           }
+          
           echo "image_tag: ${image_tag}"
           def dockerImageName = dockerBaseImageName + image_tag
           echo "dockerImageName: ${dockerImageName}"
