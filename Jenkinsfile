@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-    dockerBaseImageName = "inriachile/love-manager:"
+    dockerImageName = "inriachile/love-manager:"
     dockerImage = ""
     registryCredential = "dockerhub-inriachile"
   }
@@ -12,6 +12,7 @@ pipeline {
         anyOf {
           branch "master"
           branch "develop"
+          branch "release/*"
         }
       }
       steps {
@@ -33,7 +34,7 @@ pipeline {
           }
 
           echo "image_tag: ${image_tag}"
-          def dockerImageName = dockerBaseImageName + image_tag
+          dockerImageName = dockerImageName + image_tag
           echo "dockerImageName: ${dockerImageName}"
           dockerImage = docker.build(dockerImageName)
         }
@@ -47,6 +48,7 @@ pipeline {
     //     anyOf {
     //       branch "master"
     //       branch "develop"
+    //       branch "release/*"
     //     }
     //   }
     //   steps {
