@@ -25,8 +25,8 @@ pipeline {
           def slashPosition = git_branch.indexOf('/')
           echo "slashPosition: ${slashPosition}"
           if (slashPosition > 0) {
-            git_branch = git_branch.substring(0, slashPosition)
             git_tag = git_branch.substring(slashPosition + 1, git_branch.length())
+            git_branch = git_branch.substring(0, slashPosition)
             echo "new git_branch: ${git_branch}"
             echo "git_tag: ${git_tag}"
             if (git_branch == "release") {
