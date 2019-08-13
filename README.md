@@ -1,4 +1,4 @@
-# LOVE Manager
+# LOVE Manager Dummy repo for Jenkinsfile testing
 
 This repository contains the code of the Django Channels project that acts as middleware for the LOVE-frontend
 
