@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-    dockerBaseImageName = "inriachile/love-manager:"
+    dockerImageName = "inriachile/love-manager:"
     dockerImage = ""
     registryCredential = "dockerhub-inriachile"
   }
@@ -12,6 +12,7 @@ pipeline {
         anyOf {
           branch "master"
           branch "develop"
+          branch "release/*"
         }
       }
       steps {
@@ -22,9 +23,10 @@ pipeline {
           def image_tag = git_branch
 
           def slashPosition = git_branch.indexOf('/')
+          echo "slashPosition: ${slashPosition}"
           if (slashPosition > 0) {
-            git_branch = git_branch.substring(0, slashPosition)
             git_tag = git_branch.substring(slashPosition + 1, git_branch.length())
+            git_branch = git_branch.substring(0, slashPosition)
             echo "new git_branch: ${git_branch}"
             echo "git_tag: ${git_tag}"
             if (git_branch == "release") {
@@ -33,7 +35,7 @@ pipeline {
           }
 
           echo "image_tag: ${image_tag}"
-          def dockerImageName = dockerBaseImageName + image_tag
+          dockerImageName = dockerImageName + image_tag
           echo "dockerImageName: ${dockerImageName}"
           dockerImage = docker.build(dockerImageName)
         }
@@ -47,6 +49,7 @@ pipeline {
     //     anyOf {
     //       branch "master"
     //       branch "develop"
+    //       branch "release/*"
     //     }
     //   }
     //   steps {
