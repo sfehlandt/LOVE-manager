@@ -17,7 +17,7 @@ pipeline {
       steps {
         script {
           echo "GIT_BRANCH: ${GIT_BRANCH}"
-          def git_tag = sh(returnStdout: true, script: "git tag --points-at")
+          def git_tag = sh(returnStdout: true, script: "git tag --points-at").trim()
           echo "git_tag: ${git_tag}"
           def git_branch = "${GIT_BRANCH}"
           echo "git_branch: ${git_branch}"
