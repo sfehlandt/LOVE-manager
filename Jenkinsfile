@@ -25,10 +25,13 @@ pipeline {
           if (slashPosition > 0) {
             git_branch = git_branch.substring(0, slashPosition)
             git_tag = git_branch.substring(slashPosition + 1, git_branch.length())
-            image_tag = git_tag
+            echo "new git_branch: ${git_branch}"
             echo "git_tag: ${git_tag}"
+            if (git_branch == "release") {
+              image_tag = git_tag
+            }
           }
-          
+
           echo "image_tag: ${image_tag}"
           def dockerImageName = dockerBaseImageName + image_tag
           echo "dockerImageName: ${dockerImageName}"
