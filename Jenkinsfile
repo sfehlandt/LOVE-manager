@@ -46,7 +46,7 @@ pipeline {
       steps {
         script {
           docker.image(dockerImageName).withRun {c ->
-            sh 'pytest'
+            sh './runtests'
           }
         }
       }
