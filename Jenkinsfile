@@ -45,11 +45,14 @@ pipeline {
       }
       steps {
         script {
-          dockerImage.run {c ->
-            sh 'pwd'
-            sh 'ls -a'
-            sh 'pytest'
-          }
+          sh "docker run ${dockerImageName} pwd"
+          sh "docker run ${dockerImageName} ls -la"
+          sh "docker run ${dockerImageName} pytest"
+          // dockerImage.run {c ->
+          //   sh 'pwd'
+          //   sh 'ls -a'
+          //   sh 'pytest'
+          // }
         }
       }
     }
