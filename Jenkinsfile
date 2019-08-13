@@ -31,11 +31,23 @@ pipeline {
 
           dockerImageName = dockerImageName + image_tag
           echo "dockerImageName: ${dockerImageName}"
-          // dockerImage = docker.build(dockerImageName)
+          dockerImage = docker.build(dockerImageName)
         }
+      }
+    }
+    stage("Run tests") {
+      when {
+        anyOf {
+          branch "master"
+          branch "develop"
+          branch "release/*"
+        }
+      }
+      steps {
         script {
-          echo "dockerImageName 2: ${dockerImageName}"
-          dockerImage = docker.build dockerImageName
+          docker.image(dockerImageName).withRun {c ->
+            sh './manager/runtests.sh'
+          }
         }
       }
     }
