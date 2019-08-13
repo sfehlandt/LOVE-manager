@@ -55,7 +55,7 @@ class AuthApiTestCase(TestCase):
             self.expected_permissions,
             'The permissions are not as expected'
         )
-        self.assertEqual(
+        self.assertNotEqual(
             response.data['user_data'],
             {
                 'username': self.user.username,
