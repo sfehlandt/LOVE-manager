@@ -45,7 +45,7 @@ pipeline {
       }
       steps {
         script {
-          docker.image('alpine').withRun {c ->
+          dockerImage.inside {c ->
             sh 'pwd'
             sh 'ls -a'
             sh 'pytest'
