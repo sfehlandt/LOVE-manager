@@ -45,7 +45,7 @@ pipeline {
       }
       steps {
         script {
-          dockerImage.inside {c ->
+          dockerImage.run {c ->
             sh 'pwd'
             sh 'ls -a'
             sh 'pytest'
